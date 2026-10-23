@@ -1,7 +1,7 @@
 # Laporan Posttest - Pemrograman Berorientasi Objek (PBO)
 
 ## Identitas 
-- **Nama**: Syarifah Anargya Rizky (Gea)
+- **Nama**: Syarifah Anargya Rizky 
 - **NIM**: 2509106007
 - **Mata Kuliah**: Pemrograman Berorientasi Objek
 - **Program Studi**: Informatika
@@ -22,12 +22,21 @@ Berikut adalah rancangan struktur kelas (*Class Diagram*) yang saya buat di Draw
 ![Class Diagram](petshop_uml_rancangan.png)
 
 ### Penjelasan Detail Relasi UML:
-1. **Asosiasi (`Hewan` $\rightarrow$ `Pelanggan`)**:
-   * **Penjelasan**: Menghubungkan kelas `Hewan` dengan kelas `Pelanggan` sebagai pemilik hewan (`pemilik`).
-   * **Alasan Pemilihan**: Kedua kelas ini dapat berdiri sendiri sebagai objek mandiri, namun objek hewan memerlukan referensi ke objek pelanggan untuk mengetahui siapa pemiliknya.
-2. **Agregasi / Komposisi (`Transaksi` $\rightarrow$ `DetailTransaksi`)**:
-   * **Penjelasan**: Menghubungkan kelas `Transaksi` dengan rincian `DetailTransaksi`.
-   * **Alasan Pemilihan**: Menggunakan relasi komposisi karena objek `DetailTransaksi` dibentuk dan dikelola sepenuhnya di dalam siklus hidup objek `Transaksi`. Jika transaksi dihapus, rincian detailnya akan ikut terhapus.
+1. **Pewarisan (*Inheritance* - Panah Segitiga Kosong / $\triangle$)**:
+   - **Penjelasan**: Menghubungkan kelas induk `EntitasToko` dengan subclass `Produk`, serta subclass `Produk` dengan kelas turunan `ProdukMakanan` dan `ProdukAksesori`.
+   - **Alasan Pemilihan**: Saya memilih relasi pewarisan agar kelas anak dapat mewarisi atribut serta method dari kelas induknya, sekaligus menerapkan *method overriding* pada `tampilkan_info()` untuk polimorfisme tanpa harus menulis ulang kode dari awal.
+
+2. **Asosiasi (`Hewan` $\rightarrow$ `Pelanggan` dan `Produk` $\rightarrow$ `Kategori`)**:
+   - **Penjelasan**: Hubungan ini menghubungkan kelas `Hewan` dengan kelas `Pelanggan` (sebagai pemilik / `pemilik`), serta kelas `Produk` dengan kelas `Kategori`.
+   - **Alasan Pemilihan**: Saya memilih relasi asosiasi karena masing-masing kelas dapat berdiri sendiri sebagai objek mandiri (*standalone*). Objek hewan dan produk hanya mereferensikan objek pelanggan dan kategori secara fungsional di dalam sistem.
+
+3. **Komposisi (`Transaksi` $\rightarrow$ `DetailTransaksi`)** *(Dilambangkan dengan simbol belah ketupat hitam / `◆` di sisi Transaksi)*:
+   - **Penjelasan**: Menghubungkan kelas transaksi `Transaksi` dengan rincian kelas `DetailTransaksi` (dengan multiplisitas *1 ke banyak*).
+   - **Alasan Pemilihan**: Saya menggunakan komposisi karena objek `DetailTransaksi` dibentuk, hidup, dan dikelola sepenuhnya di dalam siklus hidup objek transaksi `Transaksi`. Objek detail ini tidak memiliki makna atau eksistensi independen di luar transaksi tersebut (jika transaksi dihapus, rincian detail penjualannya otomatis ikut terhapus).
+
+4. **Asosiasi Berarah (`Transaksi` $\rightarrow$ `Pelanggan`)**:
+   - **Penjelasan**: Menghubungkan objek transaksi dengan data `Pelanggan` yang melakukan pembelian (*1 ke 1*).
+   - **Alasan Pemilihan**: Digunakan agar setiap transaksi penjualan memiliki referensi jelas terhadap data diri pelanggan yang bertanggung jawab atas transaksi tersebut.
 
 ---
 
@@ -46,11 +55,6 @@ Berikut adalah rancangan struktur kelas (*Class Diagram*) yang saya buat di Draw
 
 ---
 
-## 4. Screenshot Output Program
-*(Masukkan screenshot terminal hasil run program kamu di sini, sesuaikan dengan nama file gambarnya)*
-
----
-
 ## 4. Penghindaran Anti-Pattern
 Dalam program ini, saya sepenuhnya menghindari penggunaan rantai `if / elif` yang mengecek tipe objek (`type()`) atau string jenis secara manual. Penentuan perilaku cetak informasi dilakukan secara mandiri oleh masing-masing objek melalui *method overriding* `tampilkan_info()` pada loop polimorfik.
 
@@ -60,3 +64,11 @@ Dalam program ini, saya sepenuhnya menghindari penggunaan rantai `if / elif` yan
 Program ini menerapkan prinsip **Open/Closed Principle (OCP)** dan **Dependency Inversion Principle (DIP)**:
 - **Open/Closed Principle (OCP)**: Penambahan jenis produk baru (misalnya produk obat atau vitamin) dapat dilakukan hanya dengan membuat kelas turunan baru dari `Produk` tanpa perlu mengubah kode inti pada superclass `Produk` atau logika transaksi yang sudah ada.
 - **Dependency Inversion Principle (DIP)**: Kelas `Transaksi` bergantung pada abstraksi objek `Produk` yang disuntikkan dari luar (*dependency injection*) melalui method `tambah_detail(produk, jumlah)`, bukan membuat instansiasi objek produk secara langsung di dalam kelas transaksi.
+
+---
+
+## 6. Screenshot Output Program
+![Pengujian Polimorfisme](pengujian_polimorfisme.png)
+![Pengujian Overloading](pengujian_overloading.png)
+![Pengujian Duck Typing](pengujian_DuckTyping.png)
+![Pengujian Abstraksi](pengujian_abstraksi.png)

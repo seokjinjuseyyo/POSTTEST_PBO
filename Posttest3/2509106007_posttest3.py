@@ -266,7 +266,7 @@ if __name__ == "__main__":
     print(f"Apakah Royal Canin lebih murah dari Kalung? {makanan_kucing < kalung_anjing}")
 
     # 3. Uji Pelanggan & Transaksi
-    pelanggan = Pelanggan("Syarifah Gea", "081234567890")
+    pelanggan = Pelanggan("Syarifah Gea", "081234567890") #pakai nama sama saya aja yah
     transaksi = Transaksi(pelanggan)
     transaksi.tambah_detail(makanan_kucing, 2)
 
